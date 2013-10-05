@@ -553,3 +553,28 @@ body{
     font-weight: normal;
 }
 /* -- /sr-popover -- */
+
+
+.filter .tabs-left>.nav-tabs>li>a, .tabs-right>.nav-tabs>li>a {
+    min-width: initial;
+}
+.filter .tabbable{
+    margin-right: -45px;
+}
+.filter .tabs-right>.nav-tabs {
+    margin-left: 0px;
+}
+.filter .nav>li>a{
+    text-decoration: none;
+    background-color: #EEE;
+    border-color: #EEE #EEE #EEE #DDD;
+   -webkit-box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+      -moz-box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+           box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+}
+.filter .nav-tabs>.active>a{
+    background-color: #FFF;
+   -webkit-box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+      -moz-box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+           box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+}
