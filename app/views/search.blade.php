@@ -23,14 +23,49 @@
       </table>
       
       <div style="text-align: center; margin: 0 0 20px;">
-        <button style="display: none;" class="btn" id="search-result-load-button" onclick="showResults(10)">Показать еще</button>
+        <button style="display: none;" class="btn" id="search-result-load-button" onclick="showResults(20)">Показать еще</button>
       </div>
         
-    </div>  
+    </div>
+    <div class="ajax-loader"></div>  
   </div>
   <div class="span2">
-    <div class="rounded white" style="margin-left: -20px;">
-      ФИЛЬТР
+    <div class="rounded white" style="margin-left: -20px; padding: 5px;">
+      <div>
+        Откуда:<br/>
+        <input type="text" style="width: 166px">
+        Куда:<br/>
+        <input type="text" style="width: 166px">
+      </div>
+      <div>
+        Диапазон дат заезда:<br/>
+        <input name="after" type="text" class="datepicker" style="width: 74px;" value="<?= date('d.m.Y', time() + 3600*24*3) ?>">
+        <input name="before" type="text" class="datepicker" style="width: 75px;" value="<?= date('d.m.Y', time() + 3600*24*10) ?>">
+        
+        Количество ночей:<br/>
+        <input name="nightsMin" type="text" style="width: 74px;" value="6">
+        <input name="nightsMax" type="text" style="width: 75px;" value="14">
+      </div>
+      
+      <div>
+        Валюта:<br/>
+        <select name="currency" style="width: 180px">
+          <option value="5561">Доллар США</option>
+          <option value="8390" selected="selected">Рубль</option>
+          <option value="18864">Евро</option>
+          <option value="46688">Гривна</option>
+          <option value="50159">LAT</option>
+          <option value="53570">Литовский лит</option>
+          <option value="132329">Белорусский рубль</option>
+        </select>
+        
+        Диапазон цен:<br/>
+        <input name="priceMin" type="text" style="width: 74px;" value="0">
+        <input name="priceMax" type="text" style="width: 75px;" value="999999">
+      </div>
+      
+      <button class="button button-rounded button-flat-action" style="width: 100%;" onclick="goSearch()">Искать</button>
+      
     </div>
   </div>
 </div>
@@ -111,12 +146,29 @@ function showResults(count){
     searchResultStart = i;
 }
 
+function getFilter(){
+    return {
+        foo: 'bar',
+        hello: 'world!'
+    };
+}
+
 function goSearch(){
+    
+    searchResult = [];
+    searchResultStart = 0;
+    $('#searh-result .results tbody').html('');
+    
+    $('#search-result-load-button').hide();
+    $('.ajax-loader').fadeIn();
+    
     $.ajax({
         url: 'http://service.appros/tez/search',
         dataType: 'jsonp',
         type: 'GET',
+        data: getFilter(),
         success: function(data){
+            $('.ajax-loader').fadeOut();
             if (data.success === true) {
                 searchResult = data.result;
                 
@@ -127,7 +179,11 @@ function goSearch(){
 }
 
 $(document).ready(function(){
-
+    $( ".datepicker" ).datepicker({
+        dateFormat: 'dd.mm.yy'
+    });
+    
+    //goSearch();
 });
 </script>
 
