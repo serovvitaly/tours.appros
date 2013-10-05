@@ -35,17 +35,46 @@
   </div>
 </div>
 
+<div id="modal-hotel-info" class="modal hide" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Информация об отеле</h3>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn">Close</a>
+    <a href="#" class="btn btn-primary">Save changes</a>
+  </div>
+</div>
+
+<div id="modal-booking" class="modal hide" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Бронирование</h3>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn">Close</a>
+    <a href="#" class="btn btn-primary">Save changes</a>
+  </div>
+</div>
+
+
 <script>
 
 var searchResult = [];
 var searchResultStart = 0;
 
 function showHotelInfo(hotelId){
-    alert(hotelId);
+    $('#modal-hotel-info').modal('show');
 }
 
 function showBookingDialog(){
-    alert('showBookingDialog');
+    $('#modal-booking').modal('show');
 }
 
 function showResults(count){
@@ -65,26 +94,24 @@ function showResults(count){
     $('#search-result-load-button').show();
         
     for (var i = searchResultStart; i < limit; i++) {
-        //console.log(searchResult[i]);
+        console.log(searchResult[i]);
         var rowItem = $.tmpl($('#tpl-search-result-item'), searchResult[i]);
-        
-        var popover = rowItem.find('.sr-popover');
         
         rowItem.find('.hover')
             .on('mouseover', function(e){
-                popover.show();
+                $(this).find('.sr-popover').show();
             })
             .on('mouseout', function(e){
-                popover.hide();
+                $(this).find('.sr-popover').hide();
             });
         
-        rowItem.appendTo('#searh-result .results tbody');
+        rowItem.appendTo('#searh-result .results tbody').fadeIn();
     }
     
     searchResultStart = i;
 }
 
-$(document).ready(function(){
+function goSearch(){
     $.ajax({
         url: 'http://service.appros/tez/search',
         dataType: 'jsonp',
@@ -97,12 +124,16 @@ $(document).ready(function(){
             }
         }
     });
+}
+
+$(document).ready(function(){
+
 });
 </script>
 
 <script id="tpl-search-result-item" type="text/x-jquery-tmpl">
-<tr>
-  <td>${checkIn}</td>
+<tr style="display:none">
+  <td>${checkIn} (${checkInDayofWeek})</td>
   <td>${nightCount}</td>
   <td><strong><a href="#" onclick="showHotelInfo(${hotelId}); return false;">${hotel}</a></strong><br><span class="font-gray font-small">${hotelRoomType}</span></td>
   <td>${region}<br><span class="font-gray font-small">${tour}</span></td>

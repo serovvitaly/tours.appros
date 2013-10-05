@@ -11,6 +11,17 @@ body{
     background: url(../img/pix2.png) fixed;
 }
 
+.modal{
+    -webkit-border-radius: 2px;
+       -moz-border-radius: 2px;
+        -ms-border-radius: 2px;
+         -o-border-radius: 2px;
+            border-radius: 2px;
+}
+.modal-backdrop {
+    background-color: #3F3F3F;
+}
+
 .navbar-inverse .brand, .navbar-inverse .nav>li>a {
     text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.9);
     font-weight: bold;
@@ -470,11 +481,15 @@ body{
 
 #searh-result .results td{
     line-height: 15px;
+    cursor: initial;
 }
 #searh-result .results td.price{
     text-align: right;
     font-size: 15px;
     font-weight: bold;
+}
+#searh-result .results td a{
+    color: #000;
 }
 #searh-result .results td.price a{
     color: #000;
@@ -486,13 +501,24 @@ body{
 /* -- sr-popover -- */
 .sr-popover{
     position: absolute;
+    background: #FFF5CD;
     background: #FFF;
     padding: 5px;
-    margin: -35px 0 0 -260px;
+    margin: -38px 0 0 54px;
     opacity: 0.8;
     filter: alpha(opacity=80);
     border: 2px solid #000;
     display: none;
+    
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+        -ms-border-radius: 3px;
+         -o-border-radius: 3px;
+            border-radius: 3px;
+            
+       -webkit-box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+          -moz-box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+               box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
 }
 .sr-popover .sr-row div{
     display: inline-block;
