@@ -566,15 +566,21 @@ body{
 }
 .filter .nav>li>a{
     text-decoration: none;
-    background-color: #EEE;
+    background-color: #474747;
     border-color: #EEE #EEE #EEE #DDD;
-   -webkit-box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
-      -moz-box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
-           box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+   -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+      -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+           box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+}
+.filter .nav>li>a i{
+    background-image: url("/packages/bootstrap/img/glyphicons-halflings-white.png");
 }
 .filter .nav-tabs>.active>a{
     background-color: #FFF;
    -webkit-box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
       -moz-box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
            box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+}
+.filter .nav-tabs>.active>a i{
+    background-image: url("/packages/bootstrap/img/glyphicons-halflings.png");
 }
