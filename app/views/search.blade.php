@@ -149,7 +149,9 @@ function goSearch(){
 
 $(document).ready(function(){
     $( ".datepicker" ).datepicker({
-        dateFormat: 'dd.mm.yy'
+        dateFormat: 'dd.mm.yy',
+        showOtherMonths: true,
+        selectOtherMonths: true
     });
     
     //goSearch();

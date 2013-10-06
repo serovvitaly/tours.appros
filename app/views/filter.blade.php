@@ -1,7 +1,7 @@
 <div class="tabbable tabs-right">
   <ul class="nav nav-tabs">
     <li class="active"><a href="#lA" data-toggle="tab"><i class="icon-star"></i></a></li>
-    <li class=""><a href="#lB" data-toggle="tab"><i class="icon-eye-open"></i></a></li>
+    <li class=""><a href="#lB" data-toggle="tab"><i class="icon-plane"></i></a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="lA">

@@ -12,6 +12,7 @@
   
   <link rel="stylesheet" type="text/css" href="/packages/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/skins/base/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/skins/base/css/ui/datepicker.css">
 </head>
 <body>
   <div class="container">
