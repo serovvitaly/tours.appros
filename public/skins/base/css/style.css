@@ -138,6 +138,7 @@ body{
 
 .rounded.white{
     background: #FFFFFF;
+    border: 1px solid #FFF;
 }
 .rounded .rwrapper{
     padding: 10px;
