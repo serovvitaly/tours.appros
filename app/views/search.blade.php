@@ -101,6 +101,10 @@ function showResults(count){
         console.log(searchResult[i]);
         var rowItem = $.tmpl($('#tpl-search-result-item'), searchResult[i]);
         
+        rowItem.on('click', function(){
+            $(this).toggleClass('select');
+        });
+        
         rowItem.find('.hover')
             .on('mouseover', function(e){
                 $(this).find('.sr-popover').show();

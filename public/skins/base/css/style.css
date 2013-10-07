@@ -513,6 +513,14 @@ body{
 #searh-result .results td.price a:hover{
     color: red;
 }
+#searh-result .results tr.select td{
+    background: #E7E7E7;
+}
+#searh-result .results tr.select .td{
+   -webkit-box-shadow: inset 2px 4px 6px rgba(0, 0, 0, 0.3);
+      -moz-box-shadow: inset 2px 4px 6px rgba(0, 0, 0, 0.3);
+           box-shadow: inset 2px 4px 6px rgba(0, 0, 0, 0.3);
+}
 
 /* -- sr-popover -- */
 .sr-popover{
