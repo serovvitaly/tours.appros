@@ -3,7 +3,6 @@
 @section('content') 
 
 <div class="row">
-  <div class="span12">поиск</div>
   <div class="span10">
     <div id="searh-result">
       <table class="results rounded white table table-bordered table-striped table-hover">
@@ -39,46 +38,112 @@
   </div>
 </div>
 
-<div id="modal-hotel-info" class="modal hide" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Информация об отеле</h3>
-  </div>
-  <div class="modal-body">
-    <p>One fine body…</p>
-  </div>
-  <div class="modal-footer">
-    <a href="#" class="btn">Close</a>
-    <a href="#" class="btn btn-primary">Save changes</a>
-  </div>
-</div>
-
-<div id="modal-booking" class="modal hide" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Бронирование</h3>
-  </div>
-  <div class="modal-body">
-    <p>One fine body…</p>
-  </div>
-  <div class="modal-footer">
-    <a href="#" class="btn">Close</a>
-    <a href="#" class="btn btn-primary">Save changes</a>
-  </div>
-</div>
-
 
 <script>
 
 var searchResult = [];
 var searchResultStart = 0;
 
+function openPopup(el, cls) {
+  var popup = { el : $('<div class="popup opening"><div class="background"></div><div class="scroll"><div class="playout"></div></div>') }, 
+    close = $('<div class="cross"></div>');
+    
+  popup.layout = popup.el.find('.playout'),
+  popup.background = popup.el.find('.background')
+  popup.scroll = popup.el.find('.scroll')
+  
+  if (cls) popup.el.addClass(cls)
+  
+  popup.layout.append(close);
+  popup.layout.append(el);
+  $('body').append(popup.el).addClass('haspopup');
+  setTimeout(function(){
+    popup.el.removeClass('opening');
+  },1);
+  
+  popup.syncSize = function() {
+    var 
+      ph = popup.layout.outerHeight(),
+      pw = popup.layout.outerWidth(),
+      wh = $(window).height()
+    
+    if (wh > ph+100) {
+      popup.layout.css({
+        top : '50%',
+        marginLeft : pw*-0.5,
+        marginTop : ph*-0.5
+      })
+      popup.scroll.removeClass('active');
+    } else {
+      popup.layout.css({
+        top : 50,
+        marginLeft : pw*-0.5,
+        marginTop : 0
+      }) 
+      popup.scroll.addClass('active');
+    }
+  }
+  popup.syncSize();
+  popup.el.find('img').load(function(){
+    popup.syncSize();
+  })
+  popup.el.on('resize', function(){
+    popup.syncSize();
+  })
+  $(window).bind('resize.popup', function(){
+    popup.syncSize();
+  })
+  popup.close = function() {  
+    popup.el.addClass('closing')
+    setTimeout(function(){
+      popup.el.css('opacity', 0);
+      setTimeout(function(){  
+        popup.el.remove();
+        if(!$('.popup').length) $('body').removeClass('haspopup') 
+      },1);
+      $(window).unbind('.popup');
+    }, 600);
+    if (popup.onClose) popup.onClose();
+  }
+  
+  close.click(function(){
+    popup.close();
+  })
+  /*
+  popup.scroll.click(function(e){
+    var t = $(e.target);
+    if (t.hasClass('playout') || t.parents('.playout').length) return;
+    popup.close();
+  });
+  */
+  return popup;
+}
+
 function showHotelInfo(hotelId){
-    $('#modal-hotel-info').modal('show');
+    
+    var popup = openPopup( $('#tpl-popup-hotel-info').html() ).el;
+    
+    popup.find('.hotel-manager-icons a').on('click', function(){
+        var self = $(this);
+        self.siblings().removeClass('active');
+        self.addClass('active');
+        switch (self.attr('data-act')) {
+            case 'map':
+                popup.find('.hotel-gallery').slideUp(240);
+                popup.find('.hotel-map').slideDown(240);
+                break;
+            case 'gallery':
+                popup.find('.hotel-map').slideUp(240);
+                popup.find('.hotel-gallery').slideDown(240);
+                break;
+        }
+        
+        return false;
+    });
 }
 
 function showBookingDialog(){
-    $('#modal-booking').modal('show');
+    var popup = openPopup( $('#tpl-popup-booking').html() ).el;
 }
 
 function showResults(count){
@@ -102,7 +167,7 @@ function showResults(count){
         var rowItem = $.tmpl($('#tpl-search-result-item'), searchResult[i]);
         
         rowItem.on('click', function(){
-            $(this).toggleClass('select');
+            //$(this).toggleClass('select');
         });
         
         rowItem.find('.hover')
@@ -158,9 +223,75 @@ $(document).ready(function(){
         selectOtherMonths: true
     });
     
-    //goSearch();
+    goSearch();
 });
 </script>
+
+
+<script id="tpl-popup-hotel-info" type="text/x-jquery-tmpl">
+<div id="hotel-info-box">
+  <div class="hotel-map"></div>
+  <div class="hotel-manager-icons">
+    <a href="#" data-act="map" class="active"><img src="/skins/base/img/icons/glyphicons_242_google_maps.png"></a>
+    <a href="#" data-act="gallery"><img src="/skins/base/img/icons/glyphicons_138_picture.png"></a>
+  </div>
+  <div class="hotel-main-image"><img src="http://lorempixel.com/100/100/?=60"></div>
+  <div class="hotel-title">BELLEVUE HOTEL 3 * <img class="hotel-rating" src="/skins/base/img/ratings/rat-3.png"></div>
+  <div class="hotel-gallery">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+    <img src="http://lorempixel.com/70/70/?=60">
+  </div>
+  <div class="hotel-description">
+    <!--strong>Немного об отеле</strong-->
+    <p>Отель представляет собой одно четырехэтажное здание, имеет небольшую территорию. Последний ремонт был произведен в 2007 году. КОНЦЕПЦИЯ "ЛЕТО 2013".<p>
+  </div>
+</div>
+</script>
+
+<script id="tpl-popup-booking" type="text/x-jquery-tmpl">
+<div id="hotel-info-box">
+  <div class="hotel-map"></div>
+  <div class="hotel-manager-icons">
+    <a href="#" data-act="map" class="active"><img src="/skins/base/img/icons/glyphicons_242_google_maps.png"></a>
+    <a href="#" data-act="gallery"><img src="/skins/base/img/icons/glyphicons_138_picture.png"></a>
+  </div>
+  <div class="hotel-main-image"><img src="http://lorempixel.com/100/100/?=60"></div>
+  <div class="hotel-title">BELLEVUE HOTEL 3 * <img class="hotel-rating" src="/skins/base/img/ratings/rat-3.png"></div>
+  <div class="hotel-description">
+    <!--strong>Немного об отеле</strong-->
+    <p>Отель представляет собой одно четырехэтажное здание, имеет небольшую территорию. Последний ремонт был произведен в 2007 году. КОНЦЕПЦИЯ "ЛЕТО 2013".<p>
+  </div>
+</div>
+</script>
+
 
 <script id="tpl-search-result-item" type="text/x-jquery-tmpl">
 <tr style="display:none">

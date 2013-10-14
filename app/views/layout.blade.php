@@ -16,6 +16,15 @@
 </head>
 <body>
   <div class="container">
+  
+    <div class="row" id="top-main-menu">
+      <ul>
+        <li class="active"><a href="#" onclick="return false;"><i class="icon-user"></i> Поиск предложений</a></li>
+        <li><a href="#" onclick="return false;"><i class="icon-user"></i> Интересная карта</a></li>
+        <li><a href="#" onclick="return false;"><i class="icon-user"></i> Общая информация</a></li>
+      </ul>
+    </div>
+  
     @yield('content')
   </div>
   
